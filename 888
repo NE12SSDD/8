@@ -1,0 +1,68 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    int M, N;
+    
+    // Зчитуємо розмір матриці M × N
+    cout << "Enter the number of rows (M): ";
+    cin >> M;
+    cout << "Enter the number of columns (N): ";
+    cin >> N;
+
+    // Зчитуємо дані з файлу "matr_in_n.txt"
+    vector<vector<int>> matrix(M, vector<int>(N));
+    ifstream inputFile("matr_in_n.txt");
+    if (!inputFile) {
+        cerr << "Unable to open input file matr_in_n.txt";
+        return 1;
+    }
+
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+    inputFile.close();
+
+    // Знаходимо середнє значення всіх елементів матриці
+    double sum = 0;
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            sum += matrix[i][j];
+        }
+    }
+    double average = sum / (M * N);
+
+    // Знаходимо елемент матриці, найближчий до середнього значення
+    int closestRow = 0, closestCol = 0;
+    double minDiff = abs(matrix[0][0] - average);
+    for (int i = 0; i < M; ++i) {
+        for (int j = 0; j < N; ++j) {
+            double diff = abs(matrix[i][j] - average);
+            if (diff < minDiff) {
+                minDiff = diff;
+                closestRow = i;
+                closestCol = j;
+            }
+        }
+    }
+
+    // Виводимо результати в файл "matr_in_n.txt"
+    ofstream outputFile("matr_in_n.txt", ios::app);
+    if (!outputFile) {
+        cerr << "Unable to open output file matr_in_n.txt";
+        return 1;
+    }
+    outputFile << "\nClosest element to the average (" << average << ") is: " << matrix[closestRow][closestCol] << endl;
+    outputFile << "It is located at row " << closestRow + 1 << " and column " << closestCol + 1 << endl;
+    outputFile.close();
+
+    cout << "Results appended to matr_in_n.txt" << endl;
+
+    return 0;
+}
