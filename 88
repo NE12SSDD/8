@@ -1,0 +1,61 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+// Функція сортування вставками
+void insertionSort(vector<double>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        double key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+// Функція для зчитування масиву з файлу
+vector<double> readArrayFromFile(const string& filename) {
+    vector<double> arr;
+    ifstream inputFile(filename);
+    if (!inputFile) {
+        cerr << "Unable to open input file " << filename << endl;
+        exit(1);
+    }
+    double num;
+    while (inputFile >> num) {
+        arr.push_back(num);
+    }
+    inputFile.close();
+    return arr;
+}
+
+// Функція для виведення масиву у консоль
+void printArray(const vector<double>& arr) {
+    for (double num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Зчитуємо масив з файлу
+    vector<double> arr = readArrayFromFile("array_in.txt");
+
+    // Виводимо початковий масив
+    cout << "Original array: ";
+    printArray(arr);
+
+    // Сортуємо масив за допомогою сортування вставками
+    insertionSort(arr);
+
+    // Виводимо відсортований масив
+    cout << "Sorted array: ";
+    printArray(arr);
+
+    return 0;
+}
