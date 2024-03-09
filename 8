@@ -1,0 +1,51 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    int N, K, M;
+    
+    // Зчитуємо розмір масиву N
+    cout << "Enter the size of the array (N): ";
+    cin >> N;
+
+    // Зчитуємо дані з файлу "array_in_n.txt"
+    vector<int> array(N);
+    ifstream inputFile("array_in_n.txt");
+    if (!inputFile) {
+        cerr << "Unable to open input file array_in_n.txt";
+        return 1;
+    }
+
+    for (int i = 0; i < N; ++i) {
+        inputFile >> array[i];
+    }
+    inputFile.close();
+
+    // Зчитуємо номер позиції K і кількість елементів M
+    cout << "Enter the position (K) to insert zeros: ";
+    cin >> K;
+    cout << "Enter the number of zeros to insert (M): ";
+    cin >> M;
+
+    // Вставляємо M нулів перед позицією K
+    array.insert(array.begin() + K - 1, M, 0);
+
+    // Записуємо результат у файл "array_out_n.txt"
+    ofstream outputFile("array_out_n.txt");
+    if (!outputFile) {
+        cerr << "Unable to open output file array_out_n.txt";
+        return 1;
+    }
+
+    for (int i = 0; i < array.size(); ++i) {
+        outputFile << array[i] << " ";
+    }
+    outputFile.close();
+
+    cout << "Zeros inserted successfully. Check array_out_n.txt for the result." << endl;
+
+    return 0;
+}
