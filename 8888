@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+// Функція сортування вставками
+void insertionSort(vector<double>& arr) {
+    int n = arr.size();
+    for (int i = 1; i < n; ++i) {
+        double key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+// Функція для зчитування масиву з файлу
+vector<double> readArrayFromFile(const string& filename) {
+    vector<double> arr;
+    ifstream inputFile(filename);
+    if (!inputFile) {
+        cerr << "Unable to open input file " << filename << endl;
+        exit(1);
+    }
+    double num;
+    while (inputFile >> num) {
+        arr.push_back(num);
+    }
+    inputFile.close();
+    return arr;
+}
+
+// Функція для виведення масиву у консоль
+void printArray(const vector<double>& arr) {
+    for (double num : arr) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+// Функція для обробки завдання 1
+void processTask1() {
+    // Реалізація завдання 1
+}
+
+// Функція для обробки завдання 2
+void processTask2() {
+    // Реалізація завдання 2
+}
+
+// Функція для обробки завдання 3
+void processTask3() {
+    // Реалізація завдання 3
+}
+
+int main() {
+    int choice;
+    do {
+        cout << "========== Menu ==========" << endl;
+        cout << "1. Task 1" << endl;
+        cout << "2. Task 2" << endl;
+        cout << "3. Task 3" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1:
+                processTask1();
+                break;
+            case 2:
+                processTask2();
+                break;
+            case 3:
+                processTask3();
+                break;
+            case 4:
+                cout << "Exiting the program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
